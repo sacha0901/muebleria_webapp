@@ -1,4 +1,4 @@
-import { IsBoolean, IsDefined, IsEmail, IsNotEmpty, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsDefined, IsEmail, IsInt, IsNotEmpty, IsString, MaxLength } from "class-validator";
 
 export class CreateUsuarioDto {
   @IsNotEmpty()
@@ -16,12 +16,11 @@ export class CreateUsuarioDto {
   @MaxLength(50, )
   email: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(20)
-  rol: string;
+  @IsInt()
+  @IsDefined()
+  rolId: number; // ← ID del rol
 
   @IsDefined()
   @IsBoolean()
-  premium: boolean;
+  activo?: boolean;
 }

@@ -14,13 +14,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Rol {
+  id                Int      @id @default(autoincrement())
+  nombre            String   @unique @db.VarChar(50)
+  descripcion       String?  @db.VarChar(255)
+  fechaCreacion     DateTime @default(now()) @map("fecha_creacion")
+  fechaModificacion DateTime @updatedAt @map("fecha_modificacion")
+
+  // Relaciones
+  usuarios Usuario[]
+
+  @@map("rol")
+}
+
 model Usuario {
-  id                Int       @id @default(autoincrement())
-  usuario           String    @db.VarChar(20) @unique
-  clave             String    @db.VarChar(150) 
-  email             String    @db.VarChar(50) @unique
-  rol               String    @db.VarChar(20)
-  premium           Boolean
-  fechaCreacion     DateTime  @default(now()) @map("fecha_creacion")
-  fechaModificacion DateTime  @updatedAt @map("fecha_modificacion")
+  id                Int      @id @default(autoincrement())
+  usuario           String   @unique @db.VarChar(20)
+  clave             String   @db.VarChar(150)
+  email             String   @unique @db.VarChar(50)
+  rolId             Int      @map("rol_id")
+  activo            Boolean  @default(true)
+  fechaCreacion     DateTime @default(now()) @map("fecha_creacion")
+  fechaModificacion DateTime @updatedAt @map("fecha_modificacion")
+
+  //Relacion
+  rol Rol @relation(fields: [rolId], references: [id], onDelete: Restrict)
+
+  @@map("usuario")
 }
