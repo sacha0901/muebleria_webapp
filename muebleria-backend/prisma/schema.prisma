@@ -15,7 +15,7 @@ datasource db {
 }
 
 model Rol {
-  id                Int      @id @default(autoincrement())
+  id                String   @id @default(dbgenerated("ulid_generate()")) @db.VarChar(26)
   nombre            String   @unique @db.VarChar(50)
   descripcion       String?  @db.VarChar(255)
   fechaCreacion     DateTime @default(now()) @map("fecha_creacion")
@@ -28,11 +28,11 @@ model Rol {
 }
 
 model Usuario {
-  id                Int      @id @default(autoincrement())
+  id                String   @id @default(dbgenerated("ulid_generate()")) @db.VarChar(26)
   usuario           String   @unique @db.VarChar(20)
   clave             String   @db.VarChar(150)
   email             String   @unique @db.VarChar(50)
-  rolId             Int      @map("rol_id")
+  rolId             String   @map("rol_id") @db.VarChar(26)
   activo            Boolean  @default(true)
   fechaCreacion     DateTime @default(now()) @map("fecha_creacion")
   fechaModificacion DateTime @updatedAt @map("fecha_modificacion")

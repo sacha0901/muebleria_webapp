@@ -16,9 +16,9 @@ export class CreateUsuarioDto {
   @MaxLength(50, )
   email: string;
 
-  @IsInt()
+  @IsString()
   @IsDefined()
-  rolId: number; // ← ID del rol
+  rolId: string; // ← ID del rol
 
   @IsDefined()
   @IsBoolean()

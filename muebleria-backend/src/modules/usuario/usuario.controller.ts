@@ -44,7 +44,7 @@ export class UsuarioController {
   @ApiOperation({ summary: 'Obtener un usuario por su ID' })
   @ApiResponse({ status: 200, description: 'Usuario encontrado.' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id') id: string) {
     return this.usuarioService.findOne(id);
   }
 
@@ -55,7 +55,7 @@ export class UsuarioController {
   @ApiResponse({ status: 200, description: 'Usuario actualizado correctamente.' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() updateUsuarioDto: UpdateUsuarioDto,
   ) {
     return this.usuarioService.update(id, updateUsuarioDto);
@@ -67,7 +67,7 @@ export class UsuarioController {
   @ApiOperation({ summary: 'Eliminar un usuario por su ID' })
   @ApiResponse({ status: 204, description: 'Usuario eliminado exitosamente.' })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(@Param('id') id: string) {
     await this.usuarioService.remove(id);
   }
 }

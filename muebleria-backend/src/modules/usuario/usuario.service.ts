@@ -40,14 +40,14 @@ export class UsuarioService {
   }
 
   // 🟢 Buscar usuario por ID
-  async findOne(id: number): Promise<Usuario> {
+  async findOne(id: string): Promise<Usuario> {
     const usuario = await this.usuarioRepository.findById(id);
     if (!usuario) throw new NotFoundException(`El usuario con ID ${id} no existe.`);
     return usuario;
   }
 
   // 🟡 Actualizar usuario
-  async update(id: number, dto: UpdateUsuarioDto): Promise<Usuario> {
+  async update(id: string, dto: UpdateUsuarioDto): Promise<Usuario> {
     const existe = await this.usuarioRepository.findById(id);
     if (!existe) throw new NotFoundException(`El usuario con ID ${id} no existe.`);
 
@@ -77,7 +77,7 @@ export class UsuarioService {
   }
 
   // 🔴 Eliminar usuario
-  async remove(id: number) {
+  async remove(id: string) {
     const existe = await this.usuarioRepository.findById(id);
     if (!existe) throw new NotFoundException(`El usuario con ID ${id} no existe.`);
 

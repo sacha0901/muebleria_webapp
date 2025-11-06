@@ -33,14 +33,14 @@ export class RolService {
   }
 
   // 🟢 Buscar rol por ID
-  async findOne(id: number): Promise<Rol> {
+  async findOne(id: string): Promise<Rol> {
     const rol = await this.rolRepository.findById(id);
     if (!rol) throw new NotFoundException(`El rol con ID ${id} no existe.`);
     return rol;
   }
 
   // 🟡 Actualizar rol
-  async update(id: number, dto: UpdateRolDto): Promise<Rol> {
+  async update(id: string, dto: UpdateRolDto): Promise<Rol> {
     const existe = await this.rolRepository.findById(id);
     if (!existe) throw new NotFoundException(`El rol con ID ${id} no existe.`);
 
@@ -60,7 +60,7 @@ export class RolService {
   }
 
   // 🔴 Eliminar rol
-  async remove(id: number) {
+  async remove(id: string) {
     const existe = await this.rolRepository.findById(id);
     if (!existe) throw new NotFoundException(`El rol con ID ${id} no existe.`);
 
