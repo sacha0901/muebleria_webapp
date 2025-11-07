@@ -5,9 +5,15 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
 import { ProductoModule } from './modules/producto/producto.module';
 import { PrismaModule } from './core/prisma/prisma.module';
 import { RolModule } from './modules/rol/rol.module';
+import { MaterialModule } from './modules/material/material.module';
+import { ProductoMaterialModule } from './modules/producto-material/producto-material.module';
+import { CategoriaModule } from './modules/categoria/categoria.module';
+import { MediaProductoModule } from './modules/media-producto/media-producto.module';
+import { CotizacionModule } from './modules/cotizacion/cotizacion.module';
+import { BannerModule } from './modules/banner/banner.module';
 
 @Module({
-  imports: [UsuarioModule, ProductoModule, PrismaModule, RolModule],
+  imports: [UsuarioModule, ProductoModule, PrismaModule, RolModule, MaterialModule, ProductoMaterialModule, CategoriaModule, MediaProductoModule, CotizacionModule, BannerModule],
   controllers: [AppController],
   providers: [AppService],
 })
