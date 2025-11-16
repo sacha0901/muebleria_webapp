@@ -112,6 +112,7 @@ model Material {
 }
 
 model ProductoMaterial {
+  id                String   @id @default(dbgenerated("ulid_generate()")) @db.VarChar(26)
   idProducto        String   @map("producto_id") @db.VarChar(26)
   idMaterial        String   @map("material_id") @db.VarChar(26)
   fechaCreacion     DateTime @default(now()) @map("fecha_creacion")
@@ -120,9 +121,11 @@ model ProductoMaterial {
   producto Producto @relation(fields: [idProducto], references: [id], onDelete: Cascade)
   material Material @relation(fields: [idMaterial], references: [id], onDelete: Cascade)
 
-  @@id([idProducto, idMaterial])
+  @@unique([idProducto, idMaterial])
   @@map("producto_material")
 }
+
+
 
 model Cotizacion {
   id                String   @id @default(dbgenerated("ulid_generate()")) @db.VarChar(26)

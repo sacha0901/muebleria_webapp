@@ -9,18 +9,24 @@ import {
   HttpCode,
   HttpStatus,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiCreatedResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiCreatedResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+
+
 
 @ApiTags('Usuarios') // Swagger: agrupa rutas bajo esta etiqueta
+@ApiBearerAuth('JWT_AUTH')
 @Controller('usuario')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
   // 🟢 Crear usuario
+  @Roles('Administrador','Vendedor')
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo usuario' })
   @ApiCreatedResponse({ description: 'Usuario creado exitosamente.' })
@@ -30,6 +36,7 @@ export class UsuarioController {
   }
 
   // 🟢 Listar todos los usuarios
+  @Roles('Administrador','Vendedor') 
   @Get()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Obtener todos los usuarios registrados' })
@@ -62,6 +69,7 @@ export class UsuarioController {
   }
 
   // 🔴 Eliminar usuario
+  
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Eliminar un usuario por su ID' })

@@ -14,7 +14,7 @@ export class MaterialService {
   async create(dto: CreateMaterialDto): Promise<Material> {
     const nombre = dto.nombre.trim();
 
-    // Validar duplicado
+    // Verificar duplicado
     const existe = await this.materialRepository.findByNombre(nombre);
     if (existe) throw new ConflictException(`El material '${nombre}' ya existe.`);
 
@@ -33,7 +33,7 @@ export class MaterialService {
     return this.materialRepository.findAll();
   }
 
-  // 🟢 Buscar material por ID
+  // 🟢 Buscar por ID
   async findOne(id: string): Promise<Material> {
     const material = await this.materialRepository.findById(id);
     if (!material) throw new NotFoundException(`El material con ID ${id} no existe.`);
@@ -51,14 +51,14 @@ export class MaterialService {
         throw new ConflictException(`El material '${dto.nombre}' ya existe.`);
     }
 
-    const materialActualizado = await this.materialRepository.update(id, {
+    const actualizado = await this.materialRepository.update(id, {
       nombre: dto.nombre?.trim() ?? existe.nombre,
       descripcion: dto.descripcion?.trim() ?? existe.descripcion,
       imagenUrl: dto.imagenUrl?.trim() ?? existe.imagenUrl,
     });
 
-    this.logger.log(`Material actualizado: ${materialActualizado.nombre}`);
-    return materialActualizado;
+    this.logger.log(`Material actualizado: ${actualizado.nombre}`);
+    return actualizado;
   }
 
   // 🔴 Eliminar material

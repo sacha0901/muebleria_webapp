@@ -14,12 +14,14 @@ import {
   ApiOperation,
   ApiResponse,
   ApiCreatedResponse,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { ProductoService } from './producto.service';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
 
 @ApiTags('Productos')
+@ApiBearerAuth('JWT_AUTH')
 @Controller('producto')
 export class ProductoController {
   constructor(private readonly productoService: ProductoService) {}

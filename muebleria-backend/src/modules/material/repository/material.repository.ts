@@ -6,20 +6,24 @@ import { PrismaService } from 'src/core/prisma/prisma.service';
 export class MaterialRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  // 🔹 Centralizamos relaciones (si más adelante se añaden, como productos)
+  // 🔹 Relaciones centralizadas (profesional y reutilizable)
   private readonly includeRelations = {
     productos: {
-      select: {
-        id: true,
-        nombre: true,
-        slug: true,
-        activo: true,
-        fechaCreacion: true,
+      include: {
+        producto: {
+          select: {
+            id: true,
+            nombre: true,
+            slug: true,
+            activo: true,
+            fechaCreacion: true,
+          },
+        },
       },
     },
   } as const;
 
-  // 🟢 Crear material
+  // 🟢 Crear nuevo material
   async create(data: Prisma.MaterialCreateInput): Promise<Material> {
     return this.prisma.material.create({
       data,
@@ -27,7 +31,7 @@ export class MaterialRepository {
     });
   }
 
-  // 🟢 Listar materiales
+  // 🟢 Listar todos los materiales
   async findAll(): Promise<Material[]> {
     return this.prisma.material.findMany({
       orderBy: { fechaCreacion: 'asc' },
@@ -35,7 +39,7 @@ export class MaterialRepository {
     });
   }
 
-  // 🟢 Buscar material por ID (ULID)
+  // 🟢 Buscar por ID (ULID)
   async findById(id: string): Promise<Material | null> {
     return this.prisma.material.findUnique({
       where: { id },
@@ -43,7 +47,7 @@ export class MaterialRepository {
     });
   }
 
-  // 🟢 Buscar material por nombre
+  // 🟢 Buscar por nombre
   async findByNombre(nombre: string): Promise<Material | null> {
     return this.prisma.material.findUnique({
       where: { nombre },
@@ -62,6 +66,8 @@ export class MaterialRepository {
 
   // 🔴 Eliminar material
   async delete(id: string): Promise<Material> {
-    return this.prisma.material.delete({ where: { id } });
+    return this.prisma.material.delete({
+      where: { id },
+    });
   }
 }
